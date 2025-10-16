@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('leather', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('butcher_id')->constrained()->onDelete('cascade');
+            $table->decimal('cow',5,3)->default(0);
+            $table->integer('sheep')->default(0);
+            $table->integer('goat')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

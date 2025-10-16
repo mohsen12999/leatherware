@@ -4,9 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class leather extends Model
+class Leather extends Model
 {
     /** @use HasFactory<\Database\Factories\LeatherFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'butcher_id', 'cow', 'sheep', 'goat'
+    ];
+
+    public function butcher()
+    {
+        return $this->belongsTo(Butcher::class);
+    }
+
 }
