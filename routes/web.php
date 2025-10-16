@@ -31,9 +31,9 @@ Route::middleware(['auth'])->group(function () {
             ),
         )
         ->name('two-factor.show');
-});
 
-Route::resource('butchers', ButcherController::class);
-Route::resource('leathers', LeatherController::class);
+    Volt::route('dashboard/butchers', 'dashboard.butchers')->name('dashboard.butchers');
+    Volt::route('dashboard/leathers', 'dashboard.leathers')->name('dashboard.leathers');
+});
 
 require __DIR__.'/auth.php';
