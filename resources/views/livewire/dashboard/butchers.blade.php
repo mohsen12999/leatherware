@@ -4,10 +4,13 @@ use Livewire\Volt\Component;
 use App\Models\Butcher;
 
 new class extends Component {
-    //
+    
     public $butchers;
+
     public $name;
     // public $phone;
+
+    public $butcherId;
     public $isEdit = false;
 
 
@@ -25,6 +28,7 @@ new class extends Component {
     {
         $this->name = '';
         //$this->phone = '';
+        $this->butcherId = null;
         $this->isEdit = false;
     }
 
@@ -50,6 +54,7 @@ new class extends Component {
         $butcher = Butcher::findOrFail($id);
         $this->name = $butcher->name;
         // $this->phone = $butcher->phone;
+        $this->butcherId = $butcher->id;
         $this->isEdit = true;
     }
 
