@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Person;
-use App\Http\Requests\StorePersonRequest;
-use App\Http\Requests\UpdatePersonRequest;
+use App\Models\Butcher;
+use App\Http\Requests\StoreButcherRequest;
+use App\Http\Requests\UpdateButcherRequest;
 
-class PersonController extends Controller
+class ButcherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class PersonController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePersonRequest $request)
+    public function store(StoreButcherRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class PersonController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Person $person)
+    public function show(Butcher $butcher)
     {
         //
     }
@@ -43,7 +43,7 @@ class PersonController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Person $person)
+    public function edit(Butcher $butcher)
     {
         //
     }
@@ -51,7 +51,7 @@ class PersonController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePersonRequest $request, Person $person)
+    public function update(UpdateButcherRequest $request, Butcher $butcher)
     {
         //
     }
@@ -59,7 +59,7 @@ class PersonController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Person $person)
+    public function destroy(Butcher $butcher)
     {
         //
     }

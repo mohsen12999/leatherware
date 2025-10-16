@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Stock extends Model
+class leather extends Model
 {
-    /** @use HasFactory<\Database\Factories\StockFactory> */
+    /** @use HasFactory<\Database\Factories\LeatherFactory> */
     use HasFactory;
 }

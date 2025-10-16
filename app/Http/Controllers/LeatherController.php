@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Stock;
-use App\Http\Requests\StoreStockRequest;
-use App\Http\Requests\UpdateStockRequest;
+use App\Models\leather;
+use App\Http\Requests\StoreleatherRequest;
+use App\Http\Requests\UpdateleatherRequest;
 
-class StockController extends Controller
+class LeatherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class StockController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStockRequest $request)
+    public function store(StoreleatherRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class StockController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Stock $stock)
+    public function show(leather $leather)
     {
         //
     }
@@ -43,7 +43,7 @@ class StockController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Stock $stock)
+    public function edit(leather $leather)
     {
         //
     }
@@ -51,7 +51,7 @@ class StockController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStockRequest $request, Stock $stock)
+    public function update(UpdateleatherRequest $request, leather $leather)
     {
         //
     }
@@ -59,7 +59,7 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Stock $stock)
+    public function destroy(leather $leather)
     {
         //
     }
