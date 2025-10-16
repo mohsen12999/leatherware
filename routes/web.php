@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+use App\Http\Controllers\ButcherController;
+use App\Http\Controllers\LeatherController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,5 +32,8 @@ Route::middleware(['auth'])->group(function () {
         )
         ->name('two-factor.show');
 });
+
+Route::resource('butchers', ButcherController::class);
+Route::resource('leathers', LeatherController::class);
 
 require __DIR__.'/auth.php';
