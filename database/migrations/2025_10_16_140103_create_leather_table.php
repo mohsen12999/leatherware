@@ -17,6 +17,8 @@ return new class extends Migration
             $table->decimal('cow',5,3)->default(0);
             $table->integer('sheep')->default(0);
             $table->integer('goat')->default(0);
+            $table->integer('loading'); // like 14040404
+            $table->date('loading_date');
             $table->timestamps();
             $table->softDeletes();
         });
