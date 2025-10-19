@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('butchers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('phone', 20)->nullable();
             $table->timestamps();
             $table->softDeletes(); // For safe record removal
