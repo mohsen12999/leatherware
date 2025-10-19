@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('leather', function (Blueprint $table) {
             $table->id();
             $table->foreignId('butcher_id')->constrained()->onDelete('cascade');
-            $table->decimal('cow',5,3)->default(0);
-            $table->integer('sheep')->default(0);
-            $table->integer('goat')->default(0);
-            $table->integer('loading'); // like 14040404
-            $table->date('loading_date');
+            $table->decimal('cow',5,3)->nullable();
+            $table->integer('sheep')->nullable();
+            $table->integer('goat')->nullable();
+            $table->integer('loading_date'); // like 14040404
+            // $table->date('loading_date_utc');
             $table->timestamps();
             $table->softDeletes();
         });

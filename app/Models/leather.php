@@ -12,7 +12,7 @@ class Leather extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'butcher_id', 'cow', 'sheep', 'goat', 'loading', 'loading_date'
+        'butcher_id', 'cow', 'sheep', 'goat', 'loading_date' // , 'loading'
     ];
 
     public function butcher()
