@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Validation\ValidationException;
 use Livewire\Volt\Component;
 use App\Models\Butcher;
 use App\Models\Leather;
@@ -54,6 +55,12 @@ new class extends Component {
             'butcher_id' => $this->butcher_id,
         ];
 
+         if (empty($data['cow']) && empty($data['sheep']) && empty($data['goat'])) {
+            throw ValidationException::withMessages([
+                'cow' => 'You must provide at least one contact method (cow, sheep, or goat).',
+            ]);
+        }
+
         validator($data, [
             'butcher_id' => 'required|exists:butchers,id',
             'loading_date' => 'required|string|max:255',
@@ -85,6 +92,8 @@ new class extends Component {
                 },
             ],
         ])->validate();
+
+       
 
         return $data;
     }
@@ -136,10 +145,29 @@ new class extends Component {
 
 }; ?>
 
-<div>
+<div class="p-6 max-w-3xl mx-auto">
+    <h1 class="text-2xl font-bold mb-4">Leather</h1>
+
+    @if (session()->has('message'))
+
+        <div class="bg-green-100 text-green-800 p-2 rounded mb-4">
+            {{ session('message') }}
+        </div>
+
+    @elseif ($errors->any())
+
+        <div class="bg-red-100 text-red-800 p-3 rounded mb-4">
+            <ul class="list-disc pl-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        
+    @endif
+
     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'save' }}" class="mb-6">
         <input type="text" wire:model="loading_date" placeholder="14040404" class="border p-2 w-full mb-2 rounded">
-
 
         <select wire:model="butcher_id" class="border p-2 w-full mb-2 rounded">
             <option value="">-- Select Butcher --</option>
