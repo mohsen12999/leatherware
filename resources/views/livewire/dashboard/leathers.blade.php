@@ -46,10 +46,40 @@ new class extends Component {
 
     public function save()
     {
-        $this->validate([
+        // $this->validate([
+        //     'butcher_id' => 'required|exists:butchers,id',
+        //     //'name' => 'required|string|max:255',
+        // ]);
+
+        validator($data, [
             'butcher_id' => 'required|exists:butchers,id',
-            //'name' => 'required|string|max:255',
-        ]);
+            'cow' => [
+                'nullable', 'cow',
+                function ($attribute, $value, $fail) use ($data) {
+                    // If cow is filled, others must be null
+                    if (!empty($value) && (!empty($data['sheep']) || !empty($data['goat']))) {
+                        $fail('If cow is provided, sheep and goat must be empty.');
+                    }
+                },
+            ],
+            'sheep' => [
+                'nullable', 'string',
+                function ($attribute, $value, $fail) use ($data) {
+                    // If sheep or goat is filled, cow must be null
+                    if (!empty($value) && !empty($data['cow'])) {
+                        $fail('If sheep is provided, cow must be empty.');
+                    }
+                },
+            ],
+            'goat' => [
+                'nullable', 'string',
+                function ($attribute, $value, $fail) use ($data) {
+                    if (!empty($value) && !empty($data['cow'])) {
+                        $fail('If goat is provided, cow must be empty.');
+                    }
+                },
+            ],
+        ])->validate();
 
         Leather::create([
             'cow' => $this->cow == ""? null:$this->cow,
@@ -82,10 +112,45 @@ new class extends Component {
 
     public function update()
     {
-        $this->validate([
+        // $this->validate([
+        //     'butcher_id' => 'required|exists:butchers,id',
+        // ]);
+
+        $data = [
+        'cow' => $this->cow,
+        'sheep' => $this->sheep,
+        'goat' => $this->goat,
+        ];
+
+        validator($data, [
             'butcher_id' => 'required|exists:butchers,id',
-            // 'name' => 'required|string|max:255',
-        ]);
+            'cow' => [
+                'nullable', 'cow',
+                function ($attribute, $value, $fail) use ($data) {
+                    // If cow is filled, others must be null
+                    if (!empty($value) && (!empty($data['sheep']) || !empty($data['goat']))) {
+                        $fail('If cow is provided, sheep and goat must be empty.');
+                    }
+                },
+            ],
+            'sheep' => [
+                'nullable', 'string',
+                function ($attribute, $value, $fail) use ($data) {
+                    // If sheep or goat is filled, cow must be null
+                    if (!empty($value) && !empty($data['cow'])) {
+                        $fail('If sheep is provided, cow must be empty.');
+                    }
+                },
+            ],
+            'goat' => [
+                'nullable', 'string',
+                function ($attribute, $value, $fail) use ($data) {
+                    if (!empty($value) && !empty($data['cow'])) {
+                        $fail('If goat is provided, cow must be empty.');
+                    }
+                },
+            ],
+        ])->validate();
 
         $butcher = Butcher::findOrFail($this->butcherId);
         $butcher->update([
@@ -110,35 +175,6 @@ new class extends Component {
     }
 
 }; ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <div>
     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'save' }}" class="mb-6">
