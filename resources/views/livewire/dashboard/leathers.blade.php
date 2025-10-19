@@ -13,9 +13,9 @@ new class extends Component {
     public $sheep;
     public $goat;
     public $loading_date;
-    public $butcherId;
+    public $butcher_id;
 
-    $this->leatherId = null;
+    public $leatherId = null;
     public $isEdit = false;
 
     
@@ -27,7 +27,7 @@ new class extends Component {
 
     public function loadLeathers()
     {
-        $this->leathers = Leather::with('leather')->latest()->get();
+        $this->leathers = Leather::with('butcher')->latest()->get();
     }
 
     public function resetForm()
@@ -37,7 +37,7 @@ new class extends Component {
         $this->goat = '';
         // $this->loading = '';
         // $this->loading_date = '';
-        $this->butcherId = '';
+        $this->butcher_id = '';
         
         $this->leatherId = null;
         $this->isEdit = false;
@@ -51,7 +51,7 @@ new class extends Component {
             'goat' => $this->goat == ""? null:$this->goat,
             // 'loading' => $this->loading,
             'loading_date' => $this->loading_date,
-            'butcherId' => $this->butcherId,
+            'butcher_id' => $this->butcher_id,
         ];
 
         validator($data, [
@@ -59,7 +59,7 @@ new class extends Component {
             'loading_date' => 'required|string|max:255',
 
             'cow' => [
-                'nullable', 'cow',
+                'nullable', 'string',
                 function ($attribute, $value, $fail) use ($data) {
                     // If cow is filled, others must be null
                     if (!empty($value) && (!empty($data['sheep']) || !empty($data['goat']))) {
@@ -109,7 +109,7 @@ new class extends Component {
         $this->goat = $leather->goat;
         // $this->loading = $leather->loading;
         $this->loading_date = $leather->loading_date;
-        $this->butcherId = $leather->butcherId;
+        $this->butcher_id = $leather->butcher_id;
 
         $this->leatherId = $leather->id;
         $this->isEdit = true;
@@ -119,7 +119,7 @@ new class extends Component {
     {
         $leather = $this->validateData();
 
-        $record = Butcher::findOrFail($this->butcherId);
+        $record = Leather::findOrFail($this->leatherId);
         $record->update($leather);
 
         session()->flash('message', 'Leather updated successfully.');
@@ -141,7 +141,7 @@ new class extends Component {
         <input type="text" wire:model="loading_date" placeholder="14040404" class="border p-2 w-full mb-2 rounded">
 
 
-        <select wire:model="butcherId" class="border p-2 w-full mb-2 rounded">
+        <select wire:model="butcher_id" class="border p-2 w-full mb-2 rounded">
             <option value="">-- Select Butcher --</option>
             @foreach ($butchers as $butcher)
                 <option value="{{ $butcher->id }}">{{ $butcher->name }}</option>
@@ -177,17 +177,17 @@ new class extends Component {
             </tr>
         </thead>
         <tbody>
-            @foreach ($posts as $post)
+            @foreach ($leathers as $leather)
                 <tr>
-                    <td class="border p-2">{{ $post->title }}</td>
-                    <td class="border p-2">{{ $post->butcher->name ?? '—' }}</td>
-                    <td class="border p-2">{{ $post->cow }}</td>
-                    <td class="border p-2">{{ $post->sheep }}</td>
-                    <td class="border p-2">{{ $post->goat }}</td>
-                    <td class="border p-2">{{ ($post->cow != null)?$post->cow:($post->sheep."++".$post->goat) }}</td>
+                    <td class="border p-2">{{ $leather->loading_date }}</td>
+                    <td class="border p-2">{{ $leather->butcher->name ?? '—' }}</td>
+                    <td class="border p-2">{{ $leather->cow }}</td>
+                    <td class="border p-2">{{ $leather->sheep }}</td>
+                    <td class="border p-2">{{ $leather->goat }}</td>
+                    <td class="border p-2">{{ ($leather->cow != null)?$leather->cow:($leather->sheep."++".$leather->goat) }}</td>
                     <td class="border p-2 text-center">
-                        <button wire:click="edit({{ $post->id }})" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</button>
-                        <button wire:click="delete({{ $post->id }})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+                        <button wire:click="edit({{ $leather->id }})" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</button>
+                        <button wire:click="delete({{ $leather->id }})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
                     </td>
                 </tr>
             @endforeach
