@@ -107,7 +107,7 @@ new class extends Component {
     @endif
 
     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'save' }}" class="mb-6">
-        <input type="text" wire:model="name" placeholder="Title" class="border p-2 w-full mb-2 rounded">
+        <input type="text" id="name" wire:model="name" placeholder="Title" class="border p-2 w-full mb-2 rounded" onkeyup="filtering_the_list()">
         {{-- <input type="text" wire:model="phone" placeholder="Title" class="border p-2 w-full mb-2 rounded"> --}}
 
         <div class="flex gap-2">
@@ -129,7 +129,7 @@ new class extends Component {
                 <th class="p-2 border w-32">Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="table_body">
             @foreach ($butchers as $butcher)
                 <tr>
                     <td class="border p-2">{{ $butcher->id }}</td>
@@ -143,4 +143,22 @@ new class extends Component {
             @endforeach
         </tbody>
     </table>
+
+    <script>
+        function filtering_the_list() {
+            let butchers = @json($butchers);
+            let filter = document.getElementById('name').value;
+            let filtered_list = butchers.filter((ele)=>ele.name.includes(filter));
+
+            console.log({butchers,filter,filtered_list});
+            
+            const list= document.getElementById('table_body');
+            list.innerHTML = ''
+            filtered_list.forEach(ele => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = "<td class='border p-2'>"+ele.id +"</td>\n<td class='border p-2'>" + ele.name +"</td>\n<td class='border p-2 text-center'>\n<button wire:click='edit("+ele.id +")' class='bg-yellow-500 text-white px-2 py-1 rounded'>Edit</button>\n<button wire:click='delete("+ ele.id +")' class='bg-red-500 text-white px-2 py-1 rounded'>Delete</button>\n</td>";
+                list.appendChild(tr);
+            });
+        }
+    </script>
 </div>
