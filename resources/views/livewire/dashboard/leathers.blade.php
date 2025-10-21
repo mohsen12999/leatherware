@@ -13,7 +13,7 @@ new class extends Component {
     public $cow;
     public $sheep;
     public $goat;
-    public $loading_date="14040401";
+    public $loading_date="14040402";
     public $butcher_id;
 
     public $leatherId = null;
@@ -28,7 +28,7 @@ new class extends Component {
 
     public function loadLeathers()
     {
-        $this->leathers = Leather::with('butcher')->latest()->get();
+        $this->leathers = Leather::where('loading_date', $loading_date)->with('butcher')->latest()->get();
     }
 
     public function resetForm()
@@ -255,7 +255,6 @@ new class extends Component {
                 let filter = document.getElementById('search').value;
                 let filtered_list = butchers.filter((ele)=>ele.name.includes(filter));
 
-                console.log({butchers,filter,filtered_list})
                 const list= document.getElementById('list');
                 list.innerHTML = ''
                 filtered_list.forEach(ele => {
