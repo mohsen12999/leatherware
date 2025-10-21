@@ -178,10 +178,9 @@ new class extends Component {
             @endforeach
         </select>
 
-        <input type="text" wire:model="cow" placeholder="گاو" class="border p-2 w-full mb-2 rounded">
-        <input type="text" wire:model="sheep" placeholder="گوسفند" class="border p-2 w-full mb-2 rounded">
-        <input type="text" wire:model="goat" placeholder="بز" class="border p-2 w-full mb-2 rounded">
-
+        <input type="text" wire:model="cow" placeholder="گاو" onkeyup="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="border p-2 w-full mb-2 rounded">
+        <input type="text" wire:model="sheep" placeholder="گوسفند" onkeyup="this.value = this.value.replace(/[^0-9]/g, '');" class="border p-2 w-full mb-2 rounded">
+        <input type="text" wire:model="goat" placeholder="بز" onkeyup="this.value = this.value.replace(/[^0-9]/g, '');" class="border p-2 w-full mb-2 rounded">
 
         <div class="flex gap-2">
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
