@@ -123,6 +123,7 @@ new class extends Component {
     <table class="w-full border">
         <thead class="bg-gray-100">
             <tr>
+                <th class="p-2 border">id</th>
                 <th class="p-2 border">Title</th>
                 {{-- <th class="p-2 border">phone</th> --}}
                 <th class="p-2 border w-32">Actions</th>
@@ -131,6 +132,7 @@ new class extends Component {
         <tbody>
             @foreach ($butchers as $butcher)
                 <tr>
+                    <td class="border p-2">{{ $butcher->id }}</td>
                     <td class="border p-2">{{ $butcher->name }}</td>
                     {{-- <td class="border p-2">{{ $butcher->phone }}</td> --}}
                     <td class="border p-2 text-center">
