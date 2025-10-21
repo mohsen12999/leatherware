@@ -145,7 +145,9 @@ new class extends Component {
 
 }; ?>
 
-<div class="p-6 max-w-3xl mx-auto">
+<div class="p-3 max-w-3xl mx-auto flex gap-4">
+  <div class="flex-[2]">
+    
     <h1 class="text-2xl font-bold mb-4">Leather</h1>
 
     @if (session()->has('message'))
@@ -169,8 +171,8 @@ new class extends Component {
     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'save' }}" class="mb-6">
         <input type="text" wire:model="loading_date" placeholder="14040404" class="border p-2 w-full mb-2 rounded">
 
-        <select wire:model="butcher_id" class="border p-2 w-full mb-2 rounded">
-            <option value="">-- Select Butcher --</option>
+        <select id="butcher_id" wire:model="butcher_id" class="border p-2 w-full mb-2 rounded">
+            <option value="">-- انتخاب قصاب --</option>
             @foreach ($butchers as $butcher)
                 <option value="{{ $butcher->id }}">{{ $butcher->name }}</option>
             @endforeach
@@ -197,9 +199,9 @@ new class extends Component {
             <tr>
                 <th class="p-2 border">Loading date</th>
                 <th class="p-2 border">Butcher</th>
-                <th class="p-2 border">Cow</th>
+                {{-- <th class="p-2 border">Cow</th>
                 <th class="p-2 border">Sheep</th>
-                <th class="p-2 border">Goat</th>
+                <th class="p-2 border">Goat</th> --}}
                 <th class="p-2 border">Load</th>
                 <th class="p-2 border w-32">Actions</th>
             </tr>
@@ -209,10 +211,10 @@ new class extends Component {
                 <tr>
                     <td class="border p-2">{{ $leather->loading_date }}</td>
                     <td class="border p-2">{{ $leather->butcher->name ?? '—' }}</td>
-                    <td class="border p-2">{{ $leather->cow }}</td>
+                    {{-- <td class="border p-2">{{ $leather->cow }}</td>
                     <td class="border p-2">{{ $leather->sheep }}</td>
-                    <td class="border p-2">{{ $leather->goat }}</td>
-                    <td class="border p-2">{{ ($leather->cow != null)?$leather->cow:($leather->sheep."++".$leather->goat) }}</td>
+                    <td class="border p-2">{{ $leather->goat }}</td> --}}
+                    <td class="border p-2">{{ ($leather->cow != null)?($leather->cow."kg"):($leather->sheep."++".$leather->goat) }}</td>
                     <td class="border p-2 text-center">
                         <button wire:click="edit({{ $leather->id }})" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</button>
                         <button wire:click="delete({{ $leather->id }})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
@@ -221,4 +223,51 @@ new class extends Component {
             @endforeach
         </tbody>
     </table>
+
+  </div>
+  <div class="flex-[1]">
+    <h1 class="text-2xl font-bold mb-4">Butchers</h1>
+    <input 
+        id="search" 
+        class="p-3 mb-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-400"
+        placeholder="Search names..."
+        autocomplete="off"
+        onkeyup="filtering_the_list()"
+         />
+
+        <script>
+            function filtering_the_list() {
+                let butchers = @json($butchers);
+                let filter = document.getElementById('search').value;
+                let filtered_list = butchers.filter((ele)=>ele.name.includes(filter));
+
+                console.log({butchers,filter,filtered_list})
+                const list= document.getElementById('list');
+                list.innerHTML = ''
+                filtered_list.forEach(ele => {
+                    const li = document.createElement('li');
+                    li.className = "p-1 rounded-xl border border-slate-100 hover:bg-slate-50 cursor-pointer flex items-center justify-between";
+                    li.addEventListener('click', () => {document.getElementById('butcher_id').value= ele.id});
+                    li.innerHTML = ele.name;
+
+                    list.appendChild(li);
+                });
+            }
+            
+        </script>
+
+    <ul id="list" class="grid gap-2 max-h-72 overflow-auto">
+        <!-- items injected by JS -->
+        @foreach ($butchers as $butcher)
+        <li 
+            class="p-1 rounded-xl border border-slate-100 hover:bg-slate-50 cursor-pointer flex items-center justify-between"
+            onclick="document.getElementById('butcher_id').value={{ $butcher->id }}"
+            >
+                {{ $butcher->name }}
+        </li>
+        @endforeach
+      </ul>
+
+  </div>
 </div>
+
