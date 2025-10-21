@@ -28,7 +28,7 @@ new class extends Component {
 
     public function loadLeathers()
     {
-        $this->leathers = Leather::where('loading_date', $loading_date)->with('butcher')->latest()->get();
+        $this->leathers = Leather::where('loading_date', $this->loading_date)->with('butcher')->latest()->get();
     }
 
     public function resetForm()
@@ -215,7 +215,7 @@ new class extends Component {
                     {{-- <td class="border p-2">{{ $leather->cow }}</td>
                     <td class="border p-2">{{ $leather->sheep }}</td>
                     <td class="border p-2">{{ $leather->goat }}</td> --}}
-                    <td class="border p-2">{{ ($leather->cow != null)?($leather->cow."kg"):($leather->sheep."++".$leather->goat) }}</td>
+                    <td class="border p-2">{{ ($leather->cow != null)?($leather->cow." kg"):($leather->sheep."++".$leather->goat) }}</td>
                     <td class="border p-2 text-center">
                         <button wire:click="edit({{ $leather->id }})" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</button>
                         <button wire:click="delete({{ $leather->id }})" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
