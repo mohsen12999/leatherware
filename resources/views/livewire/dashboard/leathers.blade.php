@@ -237,7 +237,20 @@ new class extends Component {
         onkeyup="filtering_the_list()"
          />
 
-        <script>
+
+    <ul id="list" class="grid gap-2 max-h-72 overflow-auto">
+        <!-- items injected by JS -->
+        @foreach ($butchers as $butcher)
+        <li 
+            class="p-1 rounded-xl border border-slate-100 hover:bg-slate-50 cursor-pointer flex items-center justify-between"
+            onclick="set_butcher({{ $butcher->id }})"
+            >
+                {{ $butcher->name }}
+        </li>
+        @endforeach
+      </ul>
+
+       <script>
             function filtering_the_list() {
                 let butchers = @json($butchers);
                 let filter = document.getElementById('search').value;
@@ -249,26 +262,24 @@ new class extends Component {
                 filtered_list.forEach(ele => {
                     const li = document.createElement('li');
                     li.className = "p-1 rounded-xl border border-slate-100 hover:bg-slate-50 cursor-pointer flex items-center justify-between";
-                    li.addEventListener('click', () => {document.getElementById('butcher_id').value= ele.id});
+                    li.addEventListener('click', () => {set_butcher(ele.id)});
                     li.innerHTML = ele.name;
 
                     list.appendChild(li);
                 });
             }
+
+            function set_butcher(butcher_id) {
+                Livewire.first().set('butcher_id', butcher_id);
+
+                // $wire.set('butcher_id', butcher_id);
+
+                // const el = document.getElementById('butcher_id');
+                // el.value = butcher_id;
+                // el.dispatchEvent(new Event('input', { bubbles: true })); // tells Livewire the value changed
+            }
             
         </script>
-
-    <ul id="list" class="grid gap-2 max-h-72 overflow-auto">
-        <!-- items injected by JS -->
-        @foreach ($butchers as $butcher)
-        <li 
-            class="p-1 rounded-xl border border-slate-100 hover:bg-slate-50 cursor-pointer flex items-center justify-between"
-            onclick="document.getElementById('butcher_id').value={{ $butcher->id }}"
-            >
-                {{ $butcher->name }}
-        </li>
-        @endforeach
-      </ul>
 
   </div>
 </div>
