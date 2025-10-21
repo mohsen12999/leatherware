@@ -13,7 +13,7 @@ new class extends Component {
     public $cow;
     public $sheep;
     public $goat;
-    public $loading_date;
+    public $loading_date="14040401";
     public $butcher_id;
 
     public $leatherId = null;
