@@ -169,7 +169,7 @@ new class extends Component {
     @endif
 
     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'save' }}" class="mb-6">
-        <input type="text" wire:model="loading_date" placeholder="14040404" onkeyup="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="border p-2 w-full mb-2 rounded">
+        <input type="text" wire:model="loading_date" placeholder="14040404" onkeyup="this.value = this.value.replace(/[\u06F0-\u06F9\u0660-\u0669]/g, ch => (ch.charCodeAt(0) - (ch <= '\u06F9' ? 0x06F0 : 0x0660)).toString()).replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="border p-2 w-full mb-2 rounded">
 
         <select id="butcher_id" wire:model="butcher_id" class="border p-2 w-full mb-2 rounded">
             <option value="">-- انتخاب قصاب --</option>
@@ -178,9 +178,9 @@ new class extends Component {
             @endforeach
         </select>
 
-        <input type="text" wire:model="cow" placeholder="گاو" onkeyup="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="border p-2 w-full mb-2 rounded">
-        <input type="text" wire:model="sheep" placeholder="گوسفند" onkeyup="this.value = this.value.replace(/[^0-9]/g, '');" class="border p-2 w-full mb-2 rounded">
-        <input type="text" wire:model="goat" placeholder="بز" onkeyup="this.value = this.value.replace(/[^0-9]/g, '');" class="border p-2 w-full mb-2 rounded">
+        <input type="text" wire:model="cow"     placeholder="گاو"       onkeyup="this.value = this.value.replace(/[\u06F0-\u06F9\u0660-\u0669]/g, ch => (ch.charCodeAt(0) - (ch <= '\u06F9' ? 0x06F0 : 0x0660)).toString()).replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="border p-2 w-full mb-2 rounded">
+        <input type="text" wire:model="sheep"   placeholder="گوسفند"    onkeyup="this.value = this.value.replace(/[\u06F0-\u06F9\u0660-\u0669]/g, ch => (ch.charCodeAt(0) - (ch <= '\u06F9' ? 0x06F0 : 0x0660)).toString()).replace(/[^0-9]/g, '');" class="border p-2 w-full mb-2 rounded">
+        <input type="text" wire:model="goat"    placeholder="بز"        onkeyup="this.value = this.value.replace(/[\u06F0-\u06F9\u0660-\u0669]/g, ch => (ch.charCodeAt(0) - (ch <= '\u06F9' ? 0x06F0 : 0x0660)).toString()).replace(/[^0-9]/g, '');" class="border p-2 w-full mb-2 rounded">
 
         <div class="flex gap-2">
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
