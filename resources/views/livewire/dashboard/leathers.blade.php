@@ -169,7 +169,7 @@ new class extends Component {
     @endif
 
     <form wire:submit.prevent="{{ $isEdit ? 'update' : 'save' }}" class="mb-6">
-        <input type="text" wire:model="loading_date" placeholder="14040404" class="border p-2 w-full mb-2 rounded">
+        <input type="text" wire:model="loading_date" placeholder="14040404" onkeyup="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" class="border p-2 w-full mb-2 rounded">
 
         <select id="butcher_id" wire:model="butcher_id" class="border p-2 w-full mb-2 rounded">
             <option value="">-- انتخاب قصاب --</option>
