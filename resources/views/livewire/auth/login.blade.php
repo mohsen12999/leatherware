@@ -59,7 +59,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
     {
         $user = Auth::getProvider()->retrieveByCredentials(['email' => $this->email, 'password' => $this->password]);
 
-        if (! $user || ! Auth::getProvider()->validateCredentials($user, ['password' => $this->password])) {
+        if (! $user || ! Auth::getProvider()->validateCredentials($user, ['password' => $this->password]) || ! $user->is_active) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
